@@ -1,26 +1,21 @@
-function dragonOfLoowater(dragonHead, knightHeight) {
-    // your code here
-    const cloneDragon = dragonHead.slice().sort((a, b) => a - b);
-    const cloneKnight = knightHeight.slice().sort((a, b) => a - b);
-    let totalHeight = 0;
+function frog(jumps) {
+    let nStone = jumps.length;
+    let totalCost = [];
   
-    for (let i = 0; i < cloneKnight.length; i++) {
-      if (cloneKnight[i] < cloneDragon[0]) {
-        continue;
-      }
+    totalCost[0] = 0;
+    totalCost[1] = Math.abs(jumps[1] - jumps[0]);
   
-      cloneDragon.shift();
-      totalHeight += cloneKnight[i];
-  
-      if (cloneDragon.length === 0) {
-        return totalHeight;
-      }
+    for (let i = 2; i < nStone; i++) {
+      const jump1 = Math.abs(jumps[i] - jumps[i - 1]) + totalCost[i - 1];
+      const jump2 = Math.abs(jumps[i] - jumps[i - 2]) + totalCost[i - 2];
+      console.log("JUMP", jump1, jump2);
+      totalCost[i] = Math.min(jump1, jump2);
+      console.log("TOTAL COST", totalCost[i]);
     }
   
-    return "knight fall";
+    console.log(totalCost);
+    return totalCost[nStone - 1];
   }
   
-  console.log(dragonOfLoowater([5, 4], [7, 8, 4])); // 11
-  console.log(dragonOfLoowater([5, 10], [5])); // knight fall
-  console.log(dragonOfLoowater([7, 2], [4, 3, 1, 2])); // knight fall
-  console.log(dragonOfLoowater([7, 2], [2, 1, 8, 5])); // 10
+  console.log(frog([10, 30, 40, 20])); // 30
+  console.log(frog([30, 10, 60, 10, 60, 50])); // 40
